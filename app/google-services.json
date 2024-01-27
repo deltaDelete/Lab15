@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "989606117025",
+    "project_id": "lab15-2ba06",
+    "storage_bucket": "lab15-2ba06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989606117025:android:d283e011c704817bdf3ae0",
+        "android_client_info": {
+          "package_name": "ru.deltadelete.lab15"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989606117025-ob6cvi2p6vvmo57ijilcmiems818lr22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.deltadelete.lab15",
+            "certificate_hash": "f87f87910b4a7739b1768dcc00accbde1cb223e9"
+          }
+        },
+        {
+          "client_id": "989606117025-fml8ajvmdd41da9qigh96i3ub22lvhq6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAULbcEcZzvEJg7iaTLBmWdTG3d9Vkc1GA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989606117025-fml8ajvmdd41da9qigh96i3ub22lvhq6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "989606117025-1ean1j7epm2aqsd10e84p3hgqq30aoov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.deltadelete.lab15",
+            "certificate_hash": "2d698cd0f8fc9a291541b8bd615f0337dcacf6f4"
+          }
+        },
+        {
+          "client_id": "989606117025-fplsmessfcrp1prag1tp8tsalabc6g9g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.deltadelete.lab15",
+            "certificate_hash": "671dd52a8244f9c674a195009a87c2523af98be4"
+          }
+        },
+        {
           "client_id": "989606117025-ob6cvi2p6vvmo57ijilcmiems818lr22.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

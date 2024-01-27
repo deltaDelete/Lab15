@@ -2,12 +2,12 @@
     <string name="app_name">Lab 15</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="first_fragment_label">Login</string>
+    <string name="user_info_fragment_label">Account</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="lorem_ipsum">
+    <string name="lorem_ipsum" translatable="false">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
         dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
@@ -43,4 +43,38 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="login_title">Log In</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="password_confirm">Confirm password</string>
+    <string name="firstname">First Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="birthdate">Birthday</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="phone_format" translatable="false">+%1$s %2$s %3$s-%4$s-%5$s</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="placeholder_firstname">John</string>
+    <string name="placeholder_lastname">Smith</string>
+    <string name="placeholder_phone">+1 999 999-99-99</string>
+    <string name="required_field">Required</string>
+    <string name="invalid_phone_number">Invalid phone number</string>
+    <string name="unmatching_passwords">Passwords doesn\'t match</string>
+    <string name="invalid_format">Invalid format</string>
+    <string name="exit">Exit</string>
+    <string name="already_registered">Account with this email is already registered</string>
+    <string name="remember_me">Remember me</string>
+    <string name="avatar">Avatar</string>
+    <string name="rating">Rating: %1$d</string>
+    <string name="birthday">Birthday: %1$s</string>
+    <string name="authentification">Authentification</string>
+    <plurals name="minimal_length_is">
+        <item quantity="one">Minimal length is %1$d symbol</item>
+        <item quantity="other">Minimal length is %1$d symbols</item>
+    </plurals>
+    <plurals name="age_at_least">
+        <item quantity="one">Minimal age is %1$d year</item>
+        <item quantity="other">Minimal age is %1$d years</item>
+    </plurals>
 </resources>

@@ -12,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:text="@string/login_title"
         android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceDisplaySmall" />
@@ -22,13 +22,15 @@
         style="?attr/materialCardViewOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_below="@id/header_title">
+        android:layout_below="@id/header_title"
+        android:layout_marginTop="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:divider="@drawable/empty"
+            android:showDividers="middle"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -37,14 +39,27 @@
                 style="@style/Widget.Material3.Button.ElevatedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/login" />
+                android:gravity="start|center_vertical"
+                android:text="@string/login"
+                app:icon="@drawable/empty"
+                app:iconTint="@android:color/transparent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_button"
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/register" />
+                android:gravity="start|center_vertical"
+                android:text="@string/register"
+                app:icon="@drawable/empty"
+                app:iconTint="@android:color/transparent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/google_auth_button"
+                style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/google" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>

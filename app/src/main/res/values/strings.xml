@@ -69,6 +69,7 @@
     <string name="rating">Rating: %1$d</string>
     <string name="birthday">Birthday: %1$s</string>
     <string name="authentification">Authentification</string>
+    <string name="google" translatable="false">Google</string>
     <plurals name="minimal_length_is">
         <item quantity="one">Minimal length is %1$d symbol</item>
         <item quantity="other">Minimal length is %1$d symbols</item>

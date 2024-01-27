@@ -37,63 +37,6 @@ class AuthFragment : Fragment() {
 
     }
 
-//    private val signInLauncher = registerForActivityResult(
-//        FirebaseAuthUIActivityResultContract(),
-//    ) { res ->
-//        onSignInResult(res)
-//    }
-//
-//    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-//        val response = result.idpResponse
-//        if (result.resultCode == FragmentActivity.RESULT_OK) {
-//            // Successfully signed in
-//            NotificationManagerCompat.from(requireContext())
-//            val user = FirebaseAuth.getInstance().currentUser
-//            this.user = user
-//            if (user == null) {
-//                notificationHelper.send(
-//                    NotificationCompat.Builder(requireContext(), NOTIFICATION_TAG)
-//                        .setSmallIcon(R.drawable.ic_launcher_foreground)
-//                        .setContentTitle("Logged in")
-//                        .setContentText("But user is null")
-//                        .build()
-//                )
-//                return
-//            }
-//            notificationHelper.send(
-//                NotificationCompat.Builder(requireContext(), NOTIFICATION_TAG)
-//                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-//                    .setContentTitle("Logged in")
-//                    .setContentText("""
-//                        displayName: ${user.displayName}
-//                        photoUrl: ${user.photoUrl.toString()}
-//                        uid: ${user.uid}
-//                        isAnonymous: ${user.isAnonymous}
-//                        email: ${user.email}
-//                        phone: ${user.phoneNumber}
-//                        metadata: ${user.metadata}
-//                    """.trimIndent())
-//                    .build()
-//            )
-//        } else {
-//            notificationHelper.send(
-//                NotificationCompat.Builder(requireContext(), NOTIFICATION_TAG)
-//                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-//                    .setContentTitle("Log In fail")
-//                    .setContentText("Error ${response?.error?.errorCode}")
-//                    .build()
-//            )
-//            response?.error?.printStackTrace()
-//            return
-//        }
-//    }
-//
-//    private val providers = arrayListOf(
-//        AuthUI.IdpConfig.EmailBuilder()
-//            .build(),
-//        AuthUI.IdpConfig.GoogleBuilder().build()
-//    )
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

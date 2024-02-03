@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.auth
 import ru.deltadelete.lab15.MainActivity
 import ru.deltadelete.lab15.R
@@ -55,6 +56,10 @@ class AuthFragment : Fragment() {
 
         binding.registerButton.setOnClickListener {
             navController.navigate(R.id.action_AuthFragment_to_registerBottomSheet)
+        }
+
+        binding.googleAuthButton.setOnClickListener {
+//            Firebase.auth.signInWithCredential()
         }
 
 

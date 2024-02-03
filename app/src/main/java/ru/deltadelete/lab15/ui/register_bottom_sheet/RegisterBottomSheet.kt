@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.core.app.NotificationCompat
 import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,9 +17,11 @@ import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
 import com.google.android.material.progressindicator.IndeterminateDrawable
 import com.google.android.material.textfield.TextInputLayout
+import ru.deltadelete.lab15.MainActivity
 import ru.deltadelete.lab15.R
 import ru.deltadelete.lab15.databinding.RegisterSheetContentBinding
 import ru.deltadelete.lab15.models.UserRegister
+import ru.deltadelete.lab15.ui.auth_fragment.NotificationHelper
 import ru.deltadelete.lab15.utils.addValidationToList
 import java.util.Calendar
 
@@ -28,6 +31,7 @@ class RegisterBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: RegisterSheetContentBinding
     private val viewModel: RegisterViewModel by viewModels()
     private lateinit var progressIndicatorDrawable: IndeterminateDrawable<CircularProgressIndicatorSpec>
+    private lateinit var notificationHelper: NotificationHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +53,7 @@ class RegisterBottomSheet : BottomSheetDialogFragment() {
         progressIndicatorDrawable = IndeterminateDrawable.createCircularDrawable(
             requireContext(), spec
         )
+        notificationHelper = NotificationHelper(TAG, R.string.authentification, requireContext())
 
         setupInputFilters()
         initOnRegisterClick()
@@ -119,6 +124,13 @@ class RegisterBottomSheet : BottomSheetDialogFragment() {
                         binding.emailInputLayout.error = getString(R.string.already_registered)
                     }
                     if (it == null) {
+                        notificationHelper.send(
+                            NotificationCompat.Builder(requireContext(), TAG)
+                                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                                .setContentTitle("Error")
+                                .setContentText("Error then registering")
+                                .build()
+                        )
                         return@register
                     }
 

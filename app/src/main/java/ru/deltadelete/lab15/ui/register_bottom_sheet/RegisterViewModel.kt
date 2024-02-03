@@ -1,6 +1,10 @@
 package ru.deltadelete.lab15.ui.register_bottom_sheet
 
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +12,8 @@ import com.google.firebase.Firebase
 import com.google.firebase.app
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthCredential
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.auth
@@ -22,21 +28,28 @@ import ru.deltadelete.lab15.models.UserRegister
 
 class RegisterViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    val auth = Firebase.auth
+    private val auth by lazy { FirebaseAuth.getInstance() }
 
     fun register(
         registerBody: UserRegister,
         callback: (FirebaseUser?, alreadyRegistered: Boolean) -> Unit
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            auth.createUserWithEmailAndPassword(registerBody.email, registerBody.password)
-                .addOnCompleteListener {
-                    if (!it.isSuccessful) {
-                        return@addOnCompleteListener
+            try {
+                auth.createUserWithEmailAndPassword(registerBody.email, registerBody.password)
+                    .addOnCompleteListener {
+                        if (!it.isSuccessful) {
+                            callback(it.result?.user, true)
+                            return@addOnCompleteListener
+                        }
+                        changeName(registerBody.name)
+                        callback(it.result.user, it.result.additionalUserInfo?.isNewUser == true)
                     }
-                    changeName(registerBody.name)
-                    callback(it.result.user, it.result.additionalUserInfo?.isNewUser == true)
-                }
+            } catch (e: FirebaseAuthUserCollisionException) {
+                callback(null, true)
+            } catch (e: Exception) {
+                callback(null, false)
+            }
         }
     }
 

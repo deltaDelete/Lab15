@@ -70,6 +70,9 @@
     <string name="birthday">Birthday: %1$s</string>
     <string name="authentification">Authentification</string>
     <string name="google" translatable="false">Google</string>
+    <string name="new_post">New post</string>
+    <string name="text">Text</string>
+    <string name="create">Create</string>
     <plurals name="minimal_length_is">
         <item quantity="one">Minimal length is %1$d symbol</item>
         <item quantity="other">Minimal length is %1$d symbols</item>

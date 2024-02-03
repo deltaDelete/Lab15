@@ -37,8 +37,7 @@ class SecondFragment : Fragment() {
             navController.graph.setStartDestination(R.id.SecondFragment)
         }
         binding.buttonSecond.setOnClickListener {
-            Firebase.auth.signOut()
-            navController.navigate(R.id.action_global_AuthFragment)
+            navController.navigate(R.id.postFragment)
         }
 
 

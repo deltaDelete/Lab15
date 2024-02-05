@@ -41,4 +41,12 @@
     <string name="rating">Рейтинг: %1$d</string>
     <string name="birthday">День рождения: %1$s</string>
     <string name="authentification">Аутентификация</string>
+    <string name="new_post">Новый пост</string>
+    <string name="text">Текст</string>
+    <string name="create">Создать</string>
+    <string name="error_new_post_empty_text">Текст поста не может быть пустым</string>
+    <string name="error_new_post_unknown">Произошла ошибка при создании поста</string>
+    <string name="unknown">Неизвестно</string>
+    <string name="placeholder_string">&gt;w&lt;</string>
+    <string name="logout">Выйти</string>
 </resources>

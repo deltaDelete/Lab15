@@ -7,7 +7,6 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
-import java.util.Date
 
 data class User(
     val email: String,

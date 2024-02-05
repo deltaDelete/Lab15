@@ -45,6 +45,9 @@ class SecondFragment : Fragment() {
         if (activity is MainActivity) {
             activity.findViewById<View>(R.id.toolbar)?.visibility = View.VISIBLE
         }
+
+        // TODO: Repurpose to Account fragment
+        // TODO: Posts lazy loading / pagination
     }
 
     override fun onDestroyView() {
@@ -55,12 +58,12 @@ class SecondFragment : Fragment() {
         override fun onCreateMenu(menu: android.view.Menu, menuInflater: MenuInflater) {
             if (Firebase.auth.currentUser == null)
                 return
-            menu.add("Log out")
+            menuInflater.inflate(R.menu.menu_authenticated, menu)
         }
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            return when (menuItem.title) {
-                "Log out" -> {
+            return when (menuItem.itemId) {
+                R.id.logout -> {
                     Firebase.auth.signOut()
                     findNavController().navigate(R.id.action_global_AuthFragment)
                     activity?.removeMenuProvider(this)

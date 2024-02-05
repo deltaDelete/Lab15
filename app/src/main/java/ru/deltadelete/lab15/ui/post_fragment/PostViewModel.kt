@@ -5,27 +5,22 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fasterxml.jackson.databind.json.JsonMapper
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.deltadelete.lab15.R
 import ru.deltadelete.lab15.models.Post
-import ru.deltadelete.lab15.models.toUser
 import ru.deltadelete.lab15.models.toUserDocument
 
 class PostViewModel : ViewModel() {
     private val db = Firebase.firestore
     private val auth = Firebase.auth
-
-    private val mapper = JsonMapper()
 
     private val eventFlow = MutableStateFlow<Event>(Event.Initial)
 

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Lab 15</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
@@ -57,7 +57,7 @@
     <string name="invalid_email">Invalid email address</string>
     <string name="placeholder_firstname">John</string>
     <string name="placeholder_lastname">Smith</string>
-    <string name="placeholder_phone">+1 999 999-99-99</string>
+    <string name="placeholder_phone" tools:ignore="TypographyDashes">+1 999 999-99-99</string>
     <string name="required_field">Required</string>
     <string name="invalid_phone_number">Invalid phone number</string>
     <string name="unmatching_passwords">Passwords doesn\'t match</string>
@@ -76,8 +76,9 @@
     <string name="error_new_post_empty_text">Post\'s text cannot be empty</string>
     <string name="error_new_post_unknown">An error occurred while creating post</string>
     <string name="unknown">Unknown</string>
-    <string name="placeholder_datetime">00.00.2000 00:00:00</string>
+    <string name="placeholder_datetime" translatable="false">00.00.2000 00:00:00</string>
     <string name="placeholder_string">Placeholder</string>
+    <string name="logout">Log out</string>
     <plurals name="minimal_length_is">
         <item quantity="one">Minimal length is %1$d symbol</item>
         <item quantity="other">Minimal length is %1$d symbols</item>

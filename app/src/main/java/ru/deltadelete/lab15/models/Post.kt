@@ -1,7 +1,6 @@
 package ru.deltadelete.lab15.models
 
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.toObject
 

@@ -12,6 +12,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/text_container"
+            android:layout_marginBottom="16dp"
             style="?attr/materialCardViewFilledStyle"
             android:elevation="0dp"
             android:layout_width="match_parent"
@@ -22,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="Placeholder"
+                android:text="@string/placeholder_string"
                 android:textAppearance="?attr/textAppearanceBody1" />
         </com.google.android.material.card.MaterialCardView>
 
@@ -31,7 +32,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_container"
-            android:text="00.00.2000 00:00:00" />
+            android:text="@string/placeholder_datetime" />
+
+        <TextView
+            android:id="@+id/user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/text_container"
+            android:layout_below="@id/text_container"
+            android:text="@string/unknown" />
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -73,6 +73,11 @@
     <string name="new_post">New post</string>
     <string name="text">Text</string>
     <string name="create">Create</string>
+    <string name="error_new_post_empty_text">Post\'s text cannot be empty</string>
+    <string name="error_new_post_unknown">An error occurred while creating post</string>
+    <string name="unknown">Unknown</string>
+    <string name="placeholder_datetime">00.00.2000 00:00:00</string>
+    <string name="placeholder_string">Placeholder</string>
     <plurals name="minimal_length_is">
         <item quantity="one">Minimal length is %1$d symbol</item>
         <item quantity="other">Minimal length is %1$d symbols</item>

@@ -15,6 +15,7 @@
     
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
+        android:padding="8dp"
         android:layout_below="@id/new_post_button"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/post_item"

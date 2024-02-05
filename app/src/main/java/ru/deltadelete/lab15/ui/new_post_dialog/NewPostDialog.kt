@@ -6,25 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.google.android.gms.tasks.Task
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
 import com.google.android.material.progressindicator.IndeterminateDrawable
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.deltadelete.lab15.databinding.NewPostDialogContentBinding
-import ru.deltadelete.lab15.models.Post
-import ru.deltadelete.lab15.ui.post_fragment.PostFragment
 import ru.deltadelete.lab15.ui.post_fragment.PostViewModel
 
 class NewPostDialog : BottomSheetDialogFragment() {
     private lateinit var binding: NewPostDialogContentBinding
 
-    private val viewModel: PostViewModel by viewModels()
+    private val viewModel: PostViewModel by viewModels(ownerProducer = { this.requireActivity() })
 
     private lateinit var progressIndicatorDrawable: IndeterminateDrawable<CircularProgressIndicatorSpec>
 
@@ -63,14 +57,22 @@ class NewPostDialog : BottomSheetDialogFragment() {
                 setText(it)
             }
         }
-        binding.createPostButton.setOnClickListener {
-            binding.createPostButton.icon = progressIndicatorDrawable
-            viewModel.newPost {
-                binding.createPostButton.icon = null
-                if (it?.isSuccessful == true) {
+
+        lifecycleScope.launch {
+            viewModel.events.collectLatest {
+                if (it !is PostViewModel.Event.NewItemAtStart) {
+                    return@collectLatest
+                }
+                if (it.item.text == viewModel.text.value) {
+                    binding.createPostButton.icon = null
                     dismiss()
                 }
             }
+        }
+
+        binding.createPostButton.setOnClickListener {
+            binding.createPostButton.icon = progressIndicatorDrawable
+            viewModel.newPost()
         }
     }
 }

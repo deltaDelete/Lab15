@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
@@ -25,11 +26,13 @@ class PostViewModel : ViewModel() {
     private val eventFlow = MutableStateFlow<Event>(Event.Initial)
 
     sealed class Event {
-        object Initial : Event()
+        data object Initial : Event()
 
         data class NewItems(val items: List<Post>, val clear: Boolean) : Event()
 
         data class NewItemAtStart(val item: Post) : Event()
+
+        data class MoreItems(val items: List<Post>) : Event()
 
         data class Error(@StringRes val messageId: Int) : Event()
     }
@@ -39,9 +42,16 @@ class PostViewModel : ViewModel() {
     val events: StateFlow<Event> get() = eventFlow.asStateFlow()
 
     init {
+        start()
+        db.collection("posts").addSnapshotListener { value, error ->
+            Log.d("$TAG.SnapshotListener", value.toString())
+        }
+    }
+
+    fun start() {
         db.collection("posts")
             .orderBy("created", Query.Direction.DESCENDING)
-            .limit(10)
+//            .limit(10)
             .get()
             .addOnCompleteListener {
                 if (!it.isSuccessful) {
@@ -57,9 +67,6 @@ class PostViewModel : ViewModel() {
                     eventFlow.emit(Event.NewItems(posts, true))
                 }
             }
-        db.collection("posts").addSnapshotListener { value, error ->
-            Log.d("$TAG.SnapshotListener", value.toString())
-        }
     }
 
     fun newPost() {
@@ -101,6 +108,28 @@ class PostViewModel : ViewModel() {
             }
     }
 
+    fun requestMore(item: Post, position: Int) {
+        db.collection("posts")
+            .orderBy("created", Query.Direction.DESCENDING)
+            .where(Filter.lessThan("created", item.created))
+            .limit(10)
+            .get()
+            .addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    return@addOnCompleteListener
+                }
+                if (it.result.isEmpty) {
+                    return@addOnCompleteListener
+                }
+                val posts = it.result.documents.mapNotNull { doc ->
+                    doc.toObject<Post>()
+                }
+                viewModelScope.launch {
+                    eventFlow.emit(Event.MoreItems(posts))
+                }
+            }
+    }
+
     private fun emitErrorEvent(@StringRes id: Int) {
         viewModelScope.launch {
             eventFlow.emit(Event.Error(id))
@@ -110,6 +139,13 @@ class PostViewModel : ViewModel() {
     private fun emitNewItemAtStart(item: Post) {
         viewModelScope.launch {
             eventFlow.emit(Event.NewItemAtStart(item))
+        }
+    }
+
+    fun dialogDismissing() {
+        viewModelScope.launch {
+            eventFlow.emit(Event.Initial)
+            text.value = ""
         }
     }
 

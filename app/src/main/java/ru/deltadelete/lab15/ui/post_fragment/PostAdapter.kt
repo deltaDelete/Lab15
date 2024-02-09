@@ -5,6 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.shape.CornerFamily
+import io.noties.markwon.AbstractMarkwonPlugin
+import io.noties.markwon.Markwon
+import io.noties.markwon.ext.latex.JLatexMathPlugin
+import io.noties.markwon.image.glide.GlideImagesPlugin
 import ru.deltadelete.lab15.R
 import ru.deltadelete.lab15.databinding.PostItemBinding
 import ru.deltadelete.lab15.models.Post
@@ -15,6 +19,7 @@ class PostAdapter(
     private val list: MutableList<Post>
 ) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
     val format = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
+    var requestMore: ((Post, Int) -> Unit)? = null
 
     inner class ViewHolder(
         private val binding: PostItemBinding
@@ -23,9 +28,14 @@ class PostAdapter(
             binding.root.context.resources.getDimension(R.dimen.corner_radius_last_first)
         private val radius8 =
             binding.root.context.resources.getDimension(R.dimen.corner_radius_middle)
+        private val markwon = Markwon.builder(binding.root.context)
+            .usePlugin(GlideImagesPlugin.create(binding.root.context))
+            .usePlugin(JLatexMathPlugin.create(binding.text.textSize))
+            .build()
+
 
         fun bind(item: Post, position: Int) {
-            binding.text.text = item.text
+            markwon.setMarkdown(binding.text, item.text)
             binding.created.text = format.format(item.created.toDate())
             item.creator?.get()?.addOnSuccessListener {
                 binding.user.text = it.getString("name")
@@ -68,7 +78,11 @@ class PostAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position], position)
+        val item = list[position]
+        holder.bind(item, position)
+//        if (position == list.size - 2) {
+//            requestMore?.invoke(list[list.size - 1], list.size - 1)
+//        }
     }
 
 

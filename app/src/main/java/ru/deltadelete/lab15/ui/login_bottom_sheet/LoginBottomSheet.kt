@@ -1,7 +1,5 @@
 package ru.deltadelete.lab15.ui.login_bottom_sheet
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -16,13 +14,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
 import com.google.android.material.progressindicator.IndeterminateDrawable
 import com.google.android.material.textfield.TextInputLayout
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import ru.deltadelete.lab15.MainActivity
 import ru.deltadelete.lab15.R
-import ru.deltadelete.lab15.SecondFragment
 import ru.deltadelete.lab15.databinding.LoginSheetContentBinding
-import ru.deltadelete.lab15.models.User
 import ru.deltadelete.lab15.models.UserLogin
 import ru.deltadelete.lab15.utils.addValidationToList
 

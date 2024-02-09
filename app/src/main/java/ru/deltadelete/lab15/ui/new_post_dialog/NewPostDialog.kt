@@ -10,6 +10,10 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
 import com.google.android.material.progressindicator.IndeterminateDrawable
+import io.noties.markwon.Markwon
+import io.noties.markwon.editor.MarkwonEditor
+import io.noties.markwon.editor.MarkwonEditorTextWatcher
+import io.noties.markwon.image.glide.GlideImagesPlugin
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.deltadelete.lab15.databinding.NewPostDialogContentBinding
@@ -45,10 +49,15 @@ class NewPostDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // TODO: СОЗДАВАТЬ ПОСТ
         binding.textInput.doAfterTextChanged {
             viewModel.text.postValue(it.toString())
         }
+        val context = requireContext()
+        val markwon = Markwon.builder(context)
+            .usePlugin(GlideImagesPlugin.create(context))
+            .build()
+        val editor = MarkwonEditor.create(markwon)
+        binding.textInput.addTextChangedListener(MarkwonEditorTextWatcher.withProcess(editor))
         viewModel.text.observe(viewLifecycleOwner) {
             binding.textInput.apply {
                 if (text.toString() == it) {
@@ -60,11 +69,17 @@ class NewPostDialog : BottomSheetDialogFragment() {
 
         lifecycleScope.launch {
             viewModel.events.collectLatest {
+                if (it is PostViewModel.Event.Error) {
+                    binding.createPostButton.icon = null
+                    binding.textInputLayout.error = getString(it.messageId)
+                    return@collectLatest
+                }
                 if (it !is PostViewModel.Event.NewItemAtStart) {
                     return@collectLatest
                 }
                 if (it.item.text == viewModel.text.value) {
                     binding.createPostButton.icon = null
+                    viewModel.dialogDismissing()
                     dismiss()
                 }
             }

@@ -28,16 +28,22 @@ class PostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPostBinding.inflate(inflater, container, false)
-        binding.recyclerview.adapter = PostAdapter(emptyList<Post>().toMutableList())
+        binding.recyclerview.adapter = PostAdapter(emptyList<Post>().toMutableList()).apply {
+            // TODO Пока не работает
+            // TODO Пагинация
+            // requestMore = viewModel::requestMore
+        }
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.start()
         binding.newPostButton.setOnClickListener {
             try {
-                findNavController().navigate(R.id.action_postFragment_to_newPostDialog)
+                val findNavController = findNavController()
+                findNavController.navigate(R.id.newPostDialog)
             } catch (e: Exception) {
                 Log.d(TAG, "Exception while opening NewPostDialog", e)
             }
@@ -58,6 +64,10 @@ class PostFragment : Fragment() {
                     is PostViewModel.Event.NewItemAtStart -> {
                         adapter.appendStart(it.item)
                         binding.recyclerview.scrollToPosition(0)
+                    }
+
+                    is PostViewModel.Event.MoreItems -> {
+                        adapter.addAll(it.items)
                     }
 
                     is PostViewModel.Event.Error -> {

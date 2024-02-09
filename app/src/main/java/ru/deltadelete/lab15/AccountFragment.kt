@@ -8,21 +8,24 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import ru.deltadelete.lab15.databinding.FragmentSecondBinding
+import kotlinx.coroutines.launch
+import ru.deltadelete.lab15.databinding.FragmentAccountBinding
+import ru.deltadelete.lab15.models.toUser
 
-class SecondFragment : Fragment() {
+class AccountFragment : Fragment() {
 
-    private lateinit var binding: FragmentSecondBinding
+    private lateinit var binding: FragmentAccountBinding
     private val menu = Menu()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSecondBinding.inflate(inflater, container, false)
+        binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -36,7 +39,7 @@ class SecondFragment : Fragment() {
         if (navController.graph.startDestinationId != R.id.SecondFragment) {
             navController.graph.setStartDestination(R.id.SecondFragment)
         }
-        binding.buttonSecond.setOnClickListener {
+        binding.buttonPosts.setOnClickListener {
             navController.navigate(R.id.postFragment)
         }
 
@@ -45,7 +48,10 @@ class SecondFragment : Fragment() {
         if (activity is MainActivity) {
             activity.findViewById<View>(R.id.toolbar)?.visibility = View.VISIBLE
         }
-
+        lifecycleScope.launch {
+            val user = Firebase.auth.currentUser?.toUser()
+            binding.currentUser.user = user
+        }
         // TODO: Repurpose to Account fragment
         // TODO: Posts lazy loading / pagination
     }

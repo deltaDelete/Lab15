@@ -4,17 +4,19 @@ import android.net.Uri
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.ServerTimestamp
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
+import java.util.Date
 
 data class User(
     val email: String,
     val name: String,
-    val photoUrl: Uri,
-    val created: Long
+    val photoUrl: String,
+    val created: Date
 ) {
-    constructor() : this("", "", Uri.EMPTY, 0)
+    constructor() : this("", "", "", Date())
 
     fun fromReference(ref: DocumentReference) {
         ref.get().result.toObject<User>()
@@ -31,7 +33,7 @@ data class UserRegister(
     val password: String,
     val name: String
 ) {
-    fun toUser(photoUrl: Uri, created: Long): User {
+    fun toUser(photoUrl: String, created: Date): User {
         return User(
             email,
             name,
@@ -41,8 +43,15 @@ data class UserRegister(
     }
 }
 
-fun FirebaseUser.toUser(): User? {
-    return Firebase.firestore.collection("users").document(this.uid).get().result.toObject<User>()
+suspend fun FirebaseUser.toUser(): User? {
+    return Firebase.firestore.collection("users").document(this.uid).get().await().let {
+        return@let User(
+            it.getString("email")!!,
+            it.getString("name")!!,
+            it.getString("photoUrl")!!,
+            it.getTimestamp("created")!!.toDate()
+        )
+    }
 }
 
 suspend fun FirebaseUser.toUserDocument(): DocumentReference {

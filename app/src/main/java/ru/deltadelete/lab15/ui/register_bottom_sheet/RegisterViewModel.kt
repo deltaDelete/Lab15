@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.deltadelete.lab15.models.UserRegister
+import java.util.Date
 
 class RegisterViewModel : ViewModel() {
 
@@ -43,7 +44,7 @@ class RegisterViewModel : ViewModel() {
     private fun addToDb(registerBody: UserRegister) {
         auth.currentUser?.let {
             db.collection("users").document(it.uid)
-                .set(registerBody.toUser(it.photoUrl!!, it.metadata!!.creationTimestamp))
+                .set(registerBody.toUser(it.photoUrl.toString(), Date(it.metadata!!.creationTimestamp)))
         }
     }
 

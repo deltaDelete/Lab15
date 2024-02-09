@@ -49,22 +49,22 @@
 
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="ru.deltadelete.lab15.SecondFragment"
+        android:name="ru.deltadelete.lab15.AccountFragment"
         android:label="@string/user_info_fragment_label"
-        tools:layout="@layout/fragment_second" />
+        tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/postFragment"
         android:name="ru.deltadelete.lab15.ui.post_fragment.PostFragment"
-        android:label="PostFragment"
-        tools:layout="@layout/fragment_post" >
-        <action
-            android:id="@+id/action_postFragment_to_newPostDialog"
-            app:destination="@id/newPostDialog"
-            app:popUpTo="@id/postFragment" />
-    </fragment>
+        android:label="@string/posts"
+        tools:layout="@layout/fragment_post" />
+    <action
+        android:id="@+id/action_postFragment_to_newPostDialog"
+        app:destination="@id/newPostDialog"
+        app:popUpTo="@id/postFragment"
+        app:popUpToInclusive="false" />
     <dialog
-        tools:layout="@layout/new_post_dialog_content"
         android:id="@+id/newPostDialog"
         android:name="ru.deltadelete.lab15.ui.new_post_dialog.NewPostDialog"
-        android:label="NewPostDialog" />
+        android:label="NewPostDialog"
+        tools:layout="@layout/new_post_dialog_content" />
 </navigation>

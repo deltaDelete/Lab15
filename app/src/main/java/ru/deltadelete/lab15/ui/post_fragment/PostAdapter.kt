@@ -24,10 +24,6 @@ class PostAdapter(
     inner class ViewHolder(
         private val binding: PostItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        private val radius16 =
-            binding.root.context.resources.getDimension(R.dimen.corner_radius_last_first)
-        private val radius8 =
-            binding.root.context.resources.getDimension(R.dimen.corner_radius_middle)
         private val markwon = Markwon.builder(binding.root.context)
             .usePlugin(GlideImagesPlugin.create(binding.root.context))
             .usePlugin(JLatexMathPlugin.create(binding.text.textSize))
@@ -44,30 +40,6 @@ class PostAdapter(
             binding.created.text = format.format(item.created.toDate())
             item.creator?.get()?.addOnSuccessListener {
                 binding.user.text = it.getString("name")
-            }
-
-            if (position <= 0 && position != list.lastIndex) {
-                binding.root.shapeAppearanceModel = binding.root.shapeAppearanceModel.toBuilder()
-                    .setTopLeftCorner(CornerFamily.ROUNDED, radius16)
-                    .setTopRightCorner(CornerFamily.ROUNDED, radius16)
-                    .setBottomLeftCorner(CornerFamily.ROUNDED, radius8)
-                    .setBottomRightCorner(CornerFamily.ROUNDED, radius8)
-                    .build()
-            } else if (position == list.lastIndex && position != 0) {
-                binding.root.shapeAppearanceModel = binding.root.shapeAppearanceModel.toBuilder()
-                    .setTopLeftCorner(CornerFamily.ROUNDED, radius8)
-                    .setTopRightCorner(CornerFamily.ROUNDED, radius8)
-                    .setBottomLeftCorner(CornerFamily.ROUNDED, radius16)
-                    .setBottomRightCorner(CornerFamily.ROUNDED, radius16)
-                    .build()
-            } else if (position <= 0 && position == list.lastIndex) {
-                binding.root.shapeAppearanceModel = binding.root.shapeAppearanceModel.toBuilder()
-                    .setTopLeftCorner(CornerFamily.ROUNDED, radius16)
-                    .setTopRightCorner(CornerFamily.ROUNDED, radius16)
-                    .setBottomLeftCorner(CornerFamily.ROUNDED, radius16)
-                    .setBottomRightCorner(CornerFamily.ROUNDED, radius16)
-                    .build()
-                binding.root.invalidate()
             }
         }
     }

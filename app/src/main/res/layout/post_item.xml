@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:longClickable="true"
+    app:cardCornerRadius="16dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,19 +17,26 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/text_container"
-            android:layout_marginBottom="16dp"
             style="?attr/materialCardViewFilledStyle"
-            android:elevation="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:clickable="false"
+            android:contextClickable="false"
+            android:elevation="0dp"
+            android:longClickable="false"
+            app:cardCornerRadius="8dp">
 
             <TextView
                 android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:longClickable="false"
                 android:padding="16dp"
                 android:text="@string/placeholder_string"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textIsSelectable="true" />
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
@@ -38,8 +50,8 @@
             android:id="@+id/user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/text_container"
             android:layout_below="@id/text_container"
+            android:layout_alignEnd="@id/text_container"
             android:text="@string/unknown" />
     </RelativeLayout>
 

@@ -81,6 +81,7 @@
     <string name="logout">Log out</string>
     <string name="posts">Posts</string>
     <string name="placeholder_email" translatable="false">user@example.com</string>
+    <string name="delete">Delete</string>
     <plurals name="minimal_length_is">
         <item quantity="one">Minimal length is %1$d symbol</item>
         <item quantity="other">Minimal length is %1$d symbols</item>

@@ -29,9 +29,10 @@ class PostFragment : Fragment() {
     ): View {
         binding = FragmentPostBinding.inflate(inflater, container, false)
         binding.recyclerview.adapter = PostAdapter(emptyList<Post>().toMutableList()).apply {
-            // TODO Пока не работает
-            // TODO Пагинация
-            // requestMore = viewModel::requestMore
+            requestMore = viewModel::requestMore
+            longItemClickListener = {
+                viewModel.removeRemote(it)
+            }
         }
 
         return binding.root
@@ -68,6 +69,10 @@ class PostFragment : Fragment() {
 
                     is PostViewModel.Event.MoreItems -> {
                         adapter.addAll(it.items)
+                    }
+
+                    is PostViewModel.Event.Remove -> {
+                        adapter.remove(it.item)
                     }
 
                     is PostViewModel.Event.Error -> {

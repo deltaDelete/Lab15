@@ -34,6 +34,8 @@ class PostViewModel : ViewModel() {
 
         data class MoreItems(val items: List<Post>) : Event()
 
+        data class Remove(val item: Post) : Event()
+
         data class Error(@StringRes val messageId: Int) : Event()
     }
 
@@ -51,7 +53,7 @@ class PostViewModel : ViewModel() {
     fun start() {
         db.collection("posts")
             .orderBy("created", Query.Direction.DESCENDING)
-//            .limit(10)
+            .limit(10)
             .get()
             .addOnCompleteListener {
                 if (!it.isSuccessful) {
@@ -128,6 +130,20 @@ class PostViewModel : ViewModel() {
                     eventFlow.emit(Event.MoreItems(posts))
                 }
             }
+    }
+
+    fun removeRemote(item: Post) {
+        db.collection("posts")
+            .document(item.id)
+            .delete().addOnSuccessListener {
+                emitRemoved(item)
+            }
+    }
+
+    private fun emitRemoved(item: Post): Unit {
+        viewModelScope.launch {
+            eventFlow.emit(Event.Remove(item))
+        }
     }
 
     private fun emitErrorEvent(@StringRes id: Int) {

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.shape.CornerFamily
-import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.ext.latex.JLatexMathPlugin
 import io.noties.markwon.image.glide.GlideImagesPlugin
@@ -20,6 +19,7 @@ class PostAdapter(
 ) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
     val format = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
     var requestMore: ((Post, Int) -> Unit)? = null
+    var longItemClickListener: ((Post) -> Unit)? = null
 
     inner class ViewHolder(
         private val binding: PostItemBinding
@@ -33,8 +33,13 @@ class PostAdapter(
             .usePlugin(JLatexMathPlugin.create(binding.text.textSize))
             .build()
 
+        private lateinit var item: Post
 
         fun bind(item: Post, position: Int) {
+            binding.root.setOnLongClickListener {
+                longItemClickListener?.invoke(item)
+                return@setOnLongClickListener true
+            }
             markwon.setMarkdown(binding.text, item.text)
             binding.created.text = format.format(item.created.toDate())
             item.creator?.get()?.addOnSuccessListener {
@@ -80,9 +85,9 @@ class PostAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.bind(item, position)
-//        if (position == list.size - 2) {
-//            requestMore?.invoke(list[list.size - 1], list.size - 1)
-//        }
+        if (position == list.lastIndex) {
+            requestMore?.invoke(list[list.lastIndex], list.lastIndex)
+        }
     }
 
 
@@ -105,14 +110,14 @@ class PostAdapter(
     fun addAll(vararg items: Post) {
         val before = list.lastIndex
         list.addAll(items)
-        notifyItemRangeInserted(before, list.lastIndex)
+        notifyItemRangeInserted(before, items.size)
     }
 
     @Synchronized
     fun addAll(items: List<Post>) {
-        val before = list.lastIndex
+        val before = list.size
         list.addAll(items)
-        notifyItemRangeInserted(before, list.lastIndex)
+        notifyItemRangeInserted(before, items.size)
     }
 
     @Synchronized
@@ -130,9 +135,7 @@ class PostAdapter(
     @SuppressLint("notifyDataSetChanged")
     fun replaceAll(items: List<Post>) {
         list.clear()
-//        notifyItemRangeRemoved(0, list.size)
         list.addAll(items)
-//        notifyItemRangeInserted(0, items.size)
         notifyDataSetChanged()
     }
 
